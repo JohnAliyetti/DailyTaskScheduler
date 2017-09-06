@@ -4,6 +4,7 @@
 //
 //  Created by John Aliyetti on 9/2/17.
 //
+//	Purpose: Defines CTaskSchedParms, CTaskSchedResult, and schedualDailyTask().
 //
 
 #ifndef CTaskSched_hpp

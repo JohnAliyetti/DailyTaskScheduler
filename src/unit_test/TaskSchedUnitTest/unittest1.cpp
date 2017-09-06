@@ -1,3 +1,12 @@
+//
+//  unittest1.cpp
+//  
+//	
+//  Created by John Aliyetti on 9/5/2017.
+//
+//	Purpose: Provides the Unit Test class to test TaskSchedLib (schedualeDailyTask).
+//
+//
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include <atlconv.h>
@@ -233,3 +242,6 @@ namespace TaskSchedUnitTest
 		}
 	};
 }
+
+
+// eof unittest1.cpp
