@@ -1,0 +1,1 @@
+src\app\DailyTaskScheduler\DailyTaskScheduler.sln
