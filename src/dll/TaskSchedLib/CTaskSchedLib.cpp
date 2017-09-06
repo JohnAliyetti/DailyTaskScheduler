@@ -4,9 +4,8 @@
 //	
 //  Created by John Aliyetti on 9/5/2017.
 //
+//	Purpose: Provides the implementation for a simple function that uses COM to talk to and create a scheduled task with the task scheduler.
 //
-
-
 
 #include <CTaskSched.hpp>
 
@@ -15,14 +14,38 @@
 #pragma comment(lib, "credui.lib")
 
 //************************************************************************************************************
+// function:  validateParams(const CTaskSchedParms & vParams)
+//
+// purpose: Validates the given CTaskSchedParms parameters struct.
+//
+// returns: true if the Params are valid or false if they are not valid
+//************************************************************************************************************
+bool validateParams(const CTaskSchedParms & vParams)
+{
+	return ((vParams.bstrTaskName != NULL && SysStringLen(vParams.bstrTaskName) > 0)
+			&& (vParams.bstrExecutablePath != NULL && SysStringLen(vParams.bstrExecutablePath) > 0)
+			&& (vParams.bstrId != NULL && SysStringLen(vParams.bstrId) > 0)
+			&& (vParams.bstrStart != NULL && SysStringLen(vParams.bstrStart) > 0)
+			&& (vParams.bstrEnd != NULL && SysStringLen(vParams.bstrEnd) > 0)
+			&& (vParams.bstrName != NULL && SysStringLen(vParams.bstrName) > 0)
+			&& (vParams.bstrPwd != NULL && SysStringLen(vParams.bstrPwd) > 0));
+}
+
+//************************************************************************************************************
 // function:  schedualDailyTask(const CTaskSchedParms & vParams)
 //
-// purpose: Registers a a daily task with the Task Scheduler with the given CTaskSchedParms parameters struct.
+// purpose: Registers a daily task with the Task Scheduler with the given CTaskSchedParms parameters struct.
 //
 // returns: CTaskSchedResult tuple that specifies the HRESULT and a status string.
 //************************************************************************************************************
 CTaskSchedResult schedualDailyTask(const CTaskSchedParms & vParams)
 {
+	// validate the parameters first
+	if (!validateParams(vParams))				
+	{
+		return make_tuple(E_INVALIDARG, "Invalid parameter(s)");
+	}
+
     //  Create an instance of the Task Service.
     ITaskService *pService = NULL;
 	HRESULT hr = CoCreateInstance( CLSID_TaskScheduler,
@@ -238,7 +261,7 @@ CTaskSchedResult schedualDailyTask(const CTaskSchedParms & vParams)
     }
     
     
-    //  Sucess!  Clean up...
+    //  Success!  now clean up...
     pRootFolder->Release();
     pTask->Release();
     pRegisteredTask->Release();
@@ -247,3 +270,4 @@ CTaskSchedResult schedualDailyTask(const CTaskSchedParms & vParams)
 }
 
 
+// eof CTaskSchedLib.cpp

@@ -1,15 +1,22 @@
-// DailyTaskScheduler.cpp : Defines the entry point for the console application.
+//
+//  DailyTaskScheduler.cpp
+//  
+//	
+//  Created by John Aliyetti on 9/5/2017.
+//
+//	Purpose: Provides a console application that shows how to call schedualDailyTask.
 //
 
 #include "stdafx.h"
 #include <atlconv.h>
-#include <CTaskSched.hpp>
+
+#include <CTaskSched.hpp>			// header file that defines CTaskSchedParms, CTaskSchedResult, and schedualDailyTask().
 
 
 int main()
 {
-	CTaskSchedParms vParms;
-	CTaskSchedResult vResult;
+	CTaskSchedParms vParms;			// parameters passed in to schedualDailyTask()
+	CTaskSchedResult vResult;		// results returned from schedualDailyTask()
 
 	//  Initialize COM.
 	HRESULT hr = CoInitializeEx(NULL, COINIT_MULTITHREADED);
@@ -40,7 +47,6 @@ int main()
 	}
 
 	//  Acquire the user name and password.
-
 	CREDUI_INFO cui;
 	TCHAR pszName[CREDUI_MAX_USERNAME_LENGTH] = _T("");
 	TCHAR pszPwd[CREDUI_MAX_PASSWORD_LENGTH] = _T("");
@@ -88,7 +94,7 @@ int main()
 
 	vResult = schedualDailyTask(vParms);								// attempt to register the task
 
-	printf("%s : %d\n", get<1>(vResult), get<0>(vResult));				// print the result string and code
+	printf("%s : %d\n", get<1>(vResult), get<0>(vResult));				// print the result string and code to the console
 
 	// free the parameters
 	SysFreeString(vParms.bstrTaskName);

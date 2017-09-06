@@ -22,7 +22,7 @@
 using namespace std;
 
 
-typedef struct tagTaskSchedParms
+typedef struct tagTaskSchedParms					// parameters to be passed into schedualDailyTask() must be non-empty
 {
     BSTR bstrTaskName;                              // task name
     BSTR bstrExecutablePath;                        // fully qualified executable path
@@ -33,7 +33,7 @@ typedef struct tagTaskSchedParms
     BSTR bstrPwd;                                   // user password
 } CTaskSchedParms;
 
-typedef tuple<HRESULT, const char *> CTaskSchedResult;       // result tuple for schedualDailyTask
+typedef tuple<HRESULT, const char *> CTaskSchedResult;       // result tuple for schedualDailyTask()
 
 __declspec(dllimport) CTaskSchedResult schedualDailyTask(const CTaskSchedParms& vParams);              // creates a daily task with the given parameter struct
 

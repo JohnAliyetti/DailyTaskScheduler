@@ -16,7 +16,7 @@ namespace TaskSchedUnitTest
 	{
 	public:
 		
-		TEST_METHOD(TestMethod1)
+		TEST_METHOD(TestPositive1)												// this tests normal positive usage
 		{
 			CTaskSchedParms vParms;
 			CTaskSchedResult vResult;
@@ -43,7 +43,7 @@ namespace TaskSchedUnitTest
 			Assert::IsTrue(SUCCEEDED(get<0>(vResult)));
 		}
 
-		TEST_METHOD(TestMethod2)
+		TEST_METHOD(TestPositive2)												// this tests normal positive usage
 		{
 			CTaskSchedParms vParms;
 			CTaskSchedResult vResult;
@@ -70,7 +70,7 @@ namespace TaskSchedUnitTest
 			Assert::IsTrue(SUCCEEDED(get<0>(vResult)));
 		}
 
-		TEST_METHOD(TestMethod3)
+		TEST_METHOD(TestPositive3)												// this tests normal positive usage
 		{
 			CTaskSchedParms vParms;
 			CTaskSchedResult vResult;
@@ -97,7 +97,7 @@ namespace TaskSchedUnitTest
 			Assert::IsTrue(SUCCEEDED(get<0>(vResult)));
 		}
 
-		TEST_METHOD(TestMethod4)
+		TEST_METHOD(TestNegative1)												// this tests non-normal (negative) usage
 		{
 			CTaskSchedParms vParms;
 			CTaskSchedResult vResult;
@@ -106,7 +106,7 @@ namespace TaskSchedUnitTest
 			vParms.bstrTaskName = SysAllocString(L"Daily Control Panel Task");
 			vParms.bstrExecutablePath = SysAllocString(L"\\SYSTEM32\\CONTROL.EXE");
 			vParms.bstrId = SysAllocString(L"Trigger1");
-			vParms.bstrStart = SysAllocString(L"2017-06-01T12:00:00");
+			vParms.bstrStart = SysAllocString(L"2017-06-01T12:00:00");			// start date is after the end date
 			vParms.bstrEnd = SysAllocString(L"2017-01-30T16:30:00");
 			vParms.bstrName = SysAllocString(T2OLE(pszName));
 			vParms.bstrPwd = SysAllocString(T2OLE(pszPwd));
@@ -124,7 +124,7 @@ namespace TaskSchedUnitTest
 			Assert::IsTrue(FAILED(get<0>(vResult)));
 		}
 
-		TEST_METHOD(TestMethod5)
+		TEST_METHOD(TestNegative2)												// this tests non-normal (negative) usage
 		{
 			CTaskSchedParms vParms;
 			CTaskSchedResult vResult;
@@ -134,7 +134,7 @@ namespace TaskSchedUnitTest
 			vParms.bstrExecutablePath = SysAllocString(L"\\SYSTEM32\\CHARMAP.EXE");
 			vParms.bstrId = SysAllocString(L"Trigger1");
 			vParms.bstrStart = SysAllocString(L"2017-01-01T12:00:00");
-			vParms.bstrEnd = SysAllocString(L"2017-02-31T12:00:00");
+			vParms.bstrEnd = SysAllocString(L"2017-02-31T12:00:00");			// end date is invalid
 			vParms.bstrName = SysAllocString(T2OLE(pszName));
 			vParms.bstrPwd = SysAllocString(T2OLE(pszPwd));
 
@@ -151,7 +151,7 @@ namespace TaskSchedUnitTest
 			Assert::IsTrue(FAILED(get<0>(vResult)));
 		}	
 
-		TEST_METHOD(TestMethod6)
+		TEST_METHOD(TestNegative3)												// this tests non-normal (negative) usage
 		{
 			CTaskSchedParms vParms;
 			CTaskSchedResult vResult;
@@ -160,7 +160,7 @@ namespace TaskSchedUnitTest
 			vParms.bstrTaskName = SysAllocString(L"Daily Calculator Task");
 			vParms.bstrExecutablePath = SysAllocString(L"\\SYSTEM32\\CALC.EXE");
 			vParms.bstrId = SysAllocString(L"Trigger1");
-			vParms.bstrStart = SysAllocString(L"2017-13-01T12:00:00");
+			vParms.bstrStart = SysAllocString(L"2017-13-01T12:00:00");			// start date is invalid
 			vParms.bstrEnd = SysAllocString(L"2017-02-28T12:00:00");
 			vParms.bstrName = SysAllocString(T2OLE(pszName));
 			vParms.bstrPwd = SysAllocString(T2OLE(pszPwd));
@@ -169,6 +169,60 @@ namespace TaskSchedUnitTest
 
 			SysFreeString(vParms.bstrTaskName);
 			SysFreeString(vParms.bstrExecutablePath);
+			SysFreeString(vParms.bstrId);
+			SysFreeString(vParms.bstrStart);
+			SysFreeString(vParms.bstrEnd);
+			SysFreeString(vParms.bstrName);
+			SysFreeString(vParms.bstrPwd);
+
+			Assert::IsTrue(FAILED(get<0>(vResult)));
+		}
+
+		TEST_METHOD(TestEmptyParam1)											// this tests non-normal (negative) usage
+		{
+			CTaskSchedParms vParms;
+			CTaskSchedResult vResult;
+
+			// allocate and set the parameters
+			vParms.bstrTaskName = NULL;											// this param will be NULL
+			vParms.bstrExecutablePath = SysAllocString(L"\\SYSTEM32\\CALC.EXE");
+			vParms.bstrId = SysAllocString(L"Trigger1");
+			vParms.bstrStart = SysAllocString(L"2017-01-01T12:00:00");
+			vParms.bstrEnd = SysAllocString(L"2017-02-28T12:00:00");
+			vParms.bstrName = SysAllocString(T2OLE(pszName));
+			vParms.bstrPwd = SysAllocString(T2OLE(pszPwd));
+
+			vResult = schedualDailyTask(vParms);								// attempt to register the charmap task (it should fail because a parameter is NULL)
+
+			// vParms.bstrTaskName is NULL so it is not freed
+			SysFreeString(vParms.bstrExecutablePath);
+			SysFreeString(vParms.bstrId);
+			SysFreeString(vParms.bstrStart);
+			SysFreeString(vParms.bstrEnd);
+			SysFreeString(vParms.bstrName);
+			SysFreeString(vParms.bstrPwd);
+
+			Assert::IsTrue(FAILED(get<0>(vResult)));
+		}
+
+		TEST_METHOD(TestEmptyParam2)											// this tests non-normal (negative) usage
+		{
+			CTaskSchedParms vParms;
+			CTaskSchedResult vResult;
+
+			// allocate and set the parameters
+			vParms.bstrTaskName = SysAllocString(L"Daily Calculator Task");	
+			vParms.bstrExecutablePath = SysAllocString(L"");					// this parameter is empty (zero length)
+			vParms.bstrId = SysAllocString(L"Trigger1");
+			vParms.bstrStart = SysAllocString(L"2017-01-01T12:00:00");
+			vParms.bstrEnd = SysAllocString(L"2017-02-28T12:00:00");
+			vParms.bstrName = SysAllocString(T2OLE(pszName));
+			vParms.bstrPwd = SysAllocString(T2OLE(pszPwd));
+
+			vResult = schedualDailyTask(vParms);								// attempt to register the charmap task (it should fail because a parameter is empty)
+
+			SysFreeString(vParms.bstrTaskName);
+			SysFreeString(vParms.bstrExecutablePath);							// free empty param
 			SysFreeString(vParms.bstrId);
 			SysFreeString(vParms.bstrStart);
 			SysFreeString(vParms.bstrEnd);
