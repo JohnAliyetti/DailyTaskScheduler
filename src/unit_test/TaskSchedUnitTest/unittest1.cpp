@@ -7,11 +7,8 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-TCHAR pszName[CREDUI_MAX_USERNAME_LENGTH] = _T("aliyetti@aol.com");
-TCHAR pszPwd[CREDUI_MAX_PASSWORD_LENGTH] = _T("ElvisR0x");
-
-//TCHAR pszName[CREDUI_MAX_USERNAME_LENGTH] = _T("username");				// fill your username and password in for proper authentication
-//TCHAR pszPwd[CREDUI_MAX_PASSWORD_LENGTH] = _T("password");
+TCHAR pszName[CREDUI_MAX_USERNAME_LENGTH] = _T("username");				// fill your username and password in for proper authentication
+TCHAR pszPwd[CREDUI_MAX_PASSWORD_LENGTH] = _T("password");
 
 namespace TaskSchedUnitTest
 {		
