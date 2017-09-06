@@ -9,6 +9,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TaskSchedLib", "..\..\dll\T
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TaskSchedUnitTest", "..\..\unit_test\TaskSchedUnitTest\TaskSchedUnitTest.vcxproj", "{3DA9231B-A3AF-420B-BB40-37F0590C438D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{44D56D80-D578-4B63-A1A6-D1AE530D7555}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\README.md = ..\..\..\README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
